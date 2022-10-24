@@ -20,50 +20,42 @@ import br.org.com.recode.repository.ClienteRepository;
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private AutenticacaoService autenticacaoService;
+	@Autowired
+	private AutenticacaoService autenticacaoService;
 
-  @Autowired
-  private TokenService tokenService;
+	@Autowired
+	private TokenService tokenService;
 
-  @Autowired
-  private ClienteRepository clienteRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
 
-  @Override
-  @Bean
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
-  }
+	@Override
+	@Bean
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
+	}
 
-  // CONFIG AUTENTICAÇÂO
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	// CONFIG AUTENTICAÇÂO
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+	}
 
-    auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+	// CONFIG DE AUTORIZAÇÂO
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/listar").permitAll()
+				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.POST, "/cadastrar")
+				.permitAll().antMatchers(HttpMethod.POST, "/passagem/*").permitAll().anyRequest().authenticated().and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository),
+						UsernamePasswordAuthenticationFilter.class);
+	}
 
-  }
+	// CONFIG DE RECURSOS ESTATICOS
+	@Override
+	public void configure(WebSecurity web) throws Exception {
 
-  // CONFIG DE AUTORIZAÇÂO
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-
-    http.cors().and().csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/listar").permitAll()
-        .antMatchers(HttpMethod.POST, "/auth").permitAll()
-        .antMatchers(HttpMethod.POST, "/cadastrar").permitAll()
-        .antMatchers(HttpMethod.POST, "/passagem/*").permitAll()
-        .anyRequest().authenticated()
-        .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository),
-            UsernamePasswordAuthenticationFilter.class);
-
-  }
-
-  // CONFIG DE RECURSOS ESTATICOS
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-
-  }
+	}
 
 }

@@ -14,21 +14,20 @@ import br.org.com.recode.repository.ClienteRepository;
 @Service
 public class AutenticacaoService implements UserDetailsService {
 
-  @Autowired
-  private ClienteRepository clienteRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    Optional<Cliente> cliente = clienteRepository.findByEmail(username);
+		Optional<Cliente> cliente = clienteRepository.findByEmail(username);
+		if (cliente.isPresent()) {
+			System.out.println("AutenticacaoService Achou");
+			return cliente.get();
+		}
 
-    if (cliente.isPresent()) {
-      System.out.println("AutenticacaoService Achou");
-      return cliente.get();
-    }
+		throw new UsernameNotFoundException("DADOS INVALIDOS");
 
-    throw new UsernameNotFoundException("DADOS INVALIDOS");
-
-  }
+	}
 
 }
