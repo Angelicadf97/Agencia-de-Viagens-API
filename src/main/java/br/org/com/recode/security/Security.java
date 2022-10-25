@@ -46,8 +46,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/listar").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.POST, "/cadastrar")
-				.permitAll().antMatchers(HttpMethod.POST, "/passagem/*").permitAll().anyRequest().authenticated().and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.permitAll().anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository),
 						UsernamePasswordAuthenticationFilter.class);
 	}
