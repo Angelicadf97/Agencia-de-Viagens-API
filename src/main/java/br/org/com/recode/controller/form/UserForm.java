@@ -48,6 +48,6 @@ public class UserForm {
 	public User converter(BCryptPasswordEncoder encoder) {
 
 		this.setSenha(encoder.encode(senha));
-		return new User(nome, senha, email);
+		return new User(senha, email, nome);
 	}
 }

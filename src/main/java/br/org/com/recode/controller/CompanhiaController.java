@@ -25,26 +25,26 @@ public class CompanhiaController {
 	private CompanhiaRepository conRepository;
 
 	// get all clients
-	@GetMapping("/companhias")
-	public List<Companhia> getAllCompanhias() {
+	@GetMapping("/companhias/listar")
+	public List<Companhia> lista() {
 		return conRepository.findAll();
 	}
 
 	// create client rest api
-	@PostMapping("/companhias")
+	@PostMapping("/companhias/cadastrar")
 	public Companhia createCompanhia(@RequestBody Companhia con) {
 		return conRepository.save(con);
 	}
 
 	// get client by id rest api
-	@GetMapping("/companhias/{id}")
-	public Companhia getCompanhiaById(@PathVariable Long id) {
+	@GetMapping("/companhias/listar/{id}")
+	public Companhia detalhar(@PathVariable Long id) {
 		return conRepository.findById(id).get();
 	}
 
 	// update client rest api
 
-	@PutMapping("/companhias/{id}")
+	@PutMapping("/companhias/update/{id}")
 	public Companhia updateCompanhia(@PathVariable Long id, @RequestBody Companhia conDetails) {
 		Companhia con = conRepository.findById(id).get();
 
@@ -56,7 +56,7 @@ public class CompanhiaController {
 	}
 
 	// delete client rest api
-	@DeleteMapping("/companhias/{id}")
+	@DeleteMapping("/companhias/remove/{id}")
 	public void deleteCompanhia(@PathVariable Long id) {
 		conRepository.deleteById(id);
 	}

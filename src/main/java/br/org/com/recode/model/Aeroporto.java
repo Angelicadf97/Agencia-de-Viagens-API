@@ -8,25 +8,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Companhia {
-	
+public class Aeroporto {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String cnpj, nome;
-
-	public Companhia() {
+	private long id;
+	private String cnpj, nome, cidade;
+	
+	public Aeroporto() {
 	}
-	public Companhia(int id, String cnpj, String nome) {
+	public Aeroporto(long id, String cnpj, String nome, String cidade) {
 		this.id = id;
 		this.cnpj = cnpj;
 		this.nome = nome;
+		this.cidade = cidade;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getCnpj() {
@@ -41,12 +42,17 @@ public class Companhia {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(cnpj, id, nome);
+		return Objects.hash(cidade, cnpj, id, nome);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,9 +61,8 @@ public class Companhia {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Companhia other = (Companhia) obj;
-		return Objects.equals(cnpj, other.cnpj) && id == other.id && Objects.equals(nome, other.nome);
+		Aeroporto other = (Aeroporto) obj;
+		return Objects.equals(cidade, other.cidade) && Objects.equals(cnpj, other.cnpj) && id == other.id
+				&& Objects.equals(nome, other.nome);
 	}
-	
-	
 }

@@ -13,8 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.org.com.recode.repository.ClienteRepository;
+import br.org.com.recode.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -22,12 +24,18 @@ public class Security extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+	@Autowired
+	private UserAutenticacaoService userAutenticacaoService;
 
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private UserTokenService userTokenService;
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	@Bean
@@ -39,17 +47,29 @@ public class Security extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+
+		auth.userDetailsService(userAutenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 
 	// CONFIG DE AUTORIZAÇÂO
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/listar").permitAll()
-				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.POST, "/cadastrar")
-				.permitAll().anyRequest().authenticated().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository),
-						UsernamePasswordAuthenticationFilter.class);
+		http.cors().and().csrf().disable().authorizeRequests()
+		.antMatchers(HttpMethod.POST, "/adm/companhias/cadastrar").permitAll()
+		.antMatchers(HttpMethod.GET, "/adm/companhias/listar").permitAll()
+		.antMatchers(HttpMethod.PUT, "/adm/companhias/companhias/update/{id}").permitAll()
+		.antMatchers(HttpMethod.DELETE, "/companhias/remove/{id}").permitAll()
+		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers(HttpMethod.POST, "/cadastrar").permitAll()
+		.antMatchers(HttpMethod.POST, "/user/auth").permitAll()
+		.antMatchers(HttpMethod.POST, "/user/cadastrar").permitAll()
+		.antMatchers(HttpMethod.GET, "/user/listar").permitAll()
+		.anyRequest().authenticated()
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository), UsernamePasswordAuthenticationFilter.class)
+		.addFilterBefore(new UserAutenticacaoTokenFilter(userTokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
+
+		
 	}
 
 	// CONFIG DE RECURSOS ESTATICOS
