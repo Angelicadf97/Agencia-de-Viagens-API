@@ -25,26 +25,26 @@ public class AeroportoController {
 	private AeroportoRepository aerRepository;
 
 	// get all clients
-	@GetMapping("/aeroportos/listar")
+	@GetMapping("/aeroportos/")
 	public List<Aeroporto> lista() {
 		return aerRepository.findAll();
 	}
 
 	// create client rest api
-	@PostMapping("/aeroportos/cadastrar")
+	@PostMapping("/aeroportos/")
 	public Aeroporto createAeroporto(@RequestBody Aeroporto aer) {
 		return aerRepository.save(aer);
 	}
 
 	// get client by id rest api
-	@GetMapping("/aeroportos/listar/{id}")
+	@GetMapping("/aeroportos/{id}")
 	public Aeroporto detalhar(@PathVariable Long id) {
 		return aerRepository.findById(id).get();
 	}
 
 	// update client rest api
 
-	@PutMapping("/aeroportos/update/{id}")
+	@PutMapping("/aeroportos/{id}")
 	public Aeroporto updateAeroporto(@PathVariable Long id, @RequestBody Aeroporto aerDetails) {
 		Aeroporto aer = aerRepository.findById(id).get();
 
@@ -57,7 +57,7 @@ public class AeroportoController {
 	}
 
 	// delete client rest api
-	@DeleteMapping("/aeroportos/remove/{id}")
+	@DeleteMapping("/aeroportos/{id}")
 	public void deleteAeroporto(@PathVariable Long id) {
 		aerRepository.deleteById(id);
 	}

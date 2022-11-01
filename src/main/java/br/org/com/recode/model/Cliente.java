@@ -26,6 +26,7 @@ public class Cliente implements UserDetails {
 	private long id;
 
 	private String cpf, nome, tel, senha, email, logradouro, cidade;
+	
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate nasc;
 	

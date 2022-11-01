@@ -35,7 +35,7 @@ public class UserTokenService {
 	}
 
 	public boolean isTokenValid(String token) {
-
+		System.out.println("Token Valid"+ token);
 		try {
 			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
 			return true;

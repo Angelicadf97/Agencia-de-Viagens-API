@@ -12,21 +12,21 @@ public class Companhia {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String cnpj, nome;
 
 	public Companhia() {
 	}
-	public Companhia(int id, String cnpj, String nome) {
+	public Companhia(Long id, String cnpj, String nome) {
 		this.id = id;
 		this.cnpj = cnpj;
 		this.nome = nome;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getCnpj() {

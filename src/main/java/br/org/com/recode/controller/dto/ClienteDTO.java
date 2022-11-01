@@ -13,11 +13,9 @@ public class ClienteDTO {
 	private LocalDate nasc;
 	
 	public ClienteDTO() {
-		super();
 	}
 
 	public ClienteDTO(Cliente cliente) {
-		super();
 		this.id = cliente.getId();
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();

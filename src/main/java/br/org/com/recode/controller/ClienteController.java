@@ -33,11 +33,6 @@ public class ClienteController {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
-	@GetMapping("/cliente")
-	public String hello() {
-		return "Olá";
-	}
-	
 	@GetMapping("/listar")
 	  public List<ClienteDTO> lista() {
 	    List<Cliente> cli = clienteRepository.findAll();

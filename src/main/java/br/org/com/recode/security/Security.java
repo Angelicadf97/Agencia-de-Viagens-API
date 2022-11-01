@@ -54,13 +54,14 @@ public class Security extends WebSecurityConfigurerAdapter {
 	// CONFIG DE AUTORIZAÇÂO
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/adm/companhias/cadastrar").permitAll()
-		.antMatchers(HttpMethod.GET, "/adm/companhias/listar").permitAll()
-		.antMatchers(HttpMethod.PUT, "/adm/companhias/companhias/update/{id}").permitAll()
-		.antMatchers(HttpMethod.DELETE, "/companhias/remove/{id}").permitAll()
+		http.cors().and().csrf().disable().authorizeHttpRequests()
+		.antMatchers(HttpMethod.POST, "/adm/**").hasAuthority("ADMIN")
+		.antMatchers(HttpMethod.GET, "/adm/**").hasAuthority("ADMIN")
+		.antMatchers(HttpMethod.PUT, "/adm/**").hasAuthority("ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/adm/**").hasAuthority("ADMIN")
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers(HttpMethod.POST, "/cadastrar").permitAll()
+		.antMatchers(HttpMethod.PUT, "/listar").permitAll()
 		.antMatchers(HttpMethod.POST, "/user/auth").permitAll()
 		.antMatchers(HttpMethod.POST, "/user/cadastrar").permitAll()
 		.antMatchers(HttpMethod.GET, "/user/listar").permitAll()

@@ -32,9 +32,10 @@ public class UserAutenticacaoTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		String token = recuperarToken(request);
+		System.out.println("doFilter Internal" + token);
 
 		boolean valido = userTokenService.isTokenValid(token);
-		System.out.println("AutenticacaoTokenFilter" + valido);
+		System.out.println("AutenticacaoTokenFilter " + valido);
 		if (valido) {
 
 			autenticarUser(token);
@@ -47,6 +48,7 @@ public class UserAutenticacaoTokenFilter extends OncePerRequestFilter {
 	private void autenticarUser(String token) {
 
 		Long idUser = userTokenService.getIdUser(token);
+		System.out.println("idUser"+idUser);
 
 		User user = userRepository.findById(idUser).get();
 
@@ -59,11 +61,13 @@ public class UserAutenticacaoTokenFilter extends OncePerRequestFilter {
 	private String recuperarToken(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization");
+		System.out.println("recuperarToken" + token);
 
 		if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
-			System.out.println(" USER AutenticacaoTokenFilter AQUI TBM");
+			System.out.println("USER AutenticacaoTokenFilter AQUI TBM");
 			return null;
 		} else {
+			System.out.println("substring" + token.substring(7, token.length()));
 			return token.substring(7, token.length());
 		}
 	}

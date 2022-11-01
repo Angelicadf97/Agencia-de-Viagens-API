@@ -17,8 +17,8 @@ public class Hospedagem {
 	private long id;
 	private String cnpj, nome, tipo, cidade;
 	private double preco_dia, desconto;
-	@Lob
-	private byte[] imagem;
+//	@Lob
+//	private byte[] imagem;
 	
 	public Hospedagem() {
 	}
@@ -74,19 +74,15 @@ public class Hospedagem {
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
-	public byte[] getImagem() {
-		return imagem;
-	}
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
-	}
+//	public byte[] getImagem() {
+//		return imagem;
+//	}
+//	public void setImagem(byte[] imagem) {
+//		this.imagem = imagem;
+//	}
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(imagem);
-		result = prime * result + Objects.hash(cidade, cnpj, desconto, id, nome, preco_dia, tipo);
-		return result;
+		return Objects.hash(cidade, cnpj, desconto, id, nome, preco_dia, tipo);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -99,10 +95,8 @@ public class Hospedagem {
 		Hospedagem other = (Hospedagem) obj;
 		return Objects.equals(cidade, other.cidade) && Objects.equals(cnpj, other.cnpj)
 				&& Double.doubleToLongBits(desconto) == Double.doubleToLongBits(other.desconto) && id == other.id
-				&& Arrays.equals(imagem, other.imagem) && Objects.equals(nome, other.nome)
+				&& Objects.equals(nome, other.nome)
 				&& Double.doubleToLongBits(preco_dia) == Double.doubleToLongBits(other.preco_dia)
 				&& Objects.equals(tipo, other.tipo);
 	}
-	
-	
 }

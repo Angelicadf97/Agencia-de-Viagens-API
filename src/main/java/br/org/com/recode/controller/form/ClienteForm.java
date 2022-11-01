@@ -35,6 +35,8 @@ public class ClienteForm {
 	@NotNull
 	@NotEmpty
 	private String cidade;
+	@NotNull
+	@NotEmpty
 	private LocalDate nasc;
 	
 	public String getCpf() {
