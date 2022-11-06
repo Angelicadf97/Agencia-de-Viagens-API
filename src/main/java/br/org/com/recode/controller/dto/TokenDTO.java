@@ -8,6 +8,7 @@ public class TokenDTO {
 
 	private Long idUser;
 	private String emailUser;
+	private String nomeUser;
 
 	private String token;
 	private String tipo;
@@ -19,6 +20,7 @@ public class TokenDTO {
 
 		this.idUser = logado.getId();
 		this.emailUser = logado.getEmail();
+		this.nomeUser = logado.getNome();
 
 	}
 
@@ -36,5 +38,9 @@ public class TokenDTO {
 
 	public String getEmailUser() {
 		return this.emailUser;
+	}
+
+	public String getNomeUser() {
+		return this.nomeUser;
 	}
 }

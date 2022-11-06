@@ -33,19 +33,19 @@ public class ClienteController {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
-	@GetMapping("/listar")
+	@GetMapping("/")
 	  public List<ClienteDTO> lista() {
 	    List<Cliente> cli = clienteRepository.findAll();
 	    return ClienteDTO.converter(cli);
 	  }
 
-	  @GetMapping("/listar/{id}")
+	  @GetMapping("/{id}")
 	  public ClienteDTO detalhar(@PathVariable Long id) {
 	    Cliente cliente = clienteRepository.getReferenceById(id);
 	    return new ClienteDTO(cliente);
 	  }
 
-	  @DeleteMapping("/remove/{id}")
+	  @DeleteMapping("/{id}")
 	  public ResponseEntity<?> remove(@PathVariable Long id) {
 
 	    clienteRepository.deleteById(id);
@@ -53,7 +53,7 @@ public class ClienteController {
 	    return ResponseEntity.ok().build();
 	  }
 
-	  @PostMapping("/cadastrar")
+	  @PostMapping("/")
 	  public ResponseEntity<ClienteDTO> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
 
 	    Optional<Cliente> cli = clienteRepository.findByEmail(form.getEmail());
@@ -65,7 +65,7 @@ public class ClienteController {
 	      BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	      Cliente cliente = form.converter(encoder);
 	      clienteRepository.save(cliente);
-	      URI uri = uriBuilder.path("/cadastrar/{id}").buildAndExpand(cliente.getId()).toUri();
+	      URI uri = uriBuilder.path("/{id}").buildAndExpand(cliente.getId()).toUri();
 	      return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
 	    }
 
