@@ -26,25 +26,25 @@ import br.org.com.recode.repository.UserRepository;
 
 @Controller
 @ResponseBody
-@RequestMapping("/")
+@RequestMapping("/adm")
 public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
 
-	@GetMapping("/user/")
+	@GetMapping("/")
 	public List<UserDTO> lista() {
 		List<User> users = userRepository.findAll();
 		return UserDTO.converter(users);
 	}
 
-	@GetMapping("/user/{id}")
+	@GetMapping("/{id}")
 	public UserDTO detalhar(@PathVariable Long id) {
 		User user = userRepository.getReferenceById(id);
 		return new UserDTO(user);
 	}
 
-	@DeleteMapping("/user/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> remove(@PathVariable Long id) {
 
 		userRepository.deleteById(id);
@@ -52,7 +52,7 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping("/user/")
+	@PostMapping("/")
 	public ResponseEntity<UserDTO> cadastrar(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder) {
 
 		Optional<User> users = userRepository.findByEmail(form.getEmail());
@@ -64,7 +64,7 @@ public class UserController {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			User user = form.converter(encoder);
 			userRepository.save(user);
-			URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+			URI uri = uriBuilder.path("/adm/{id}").buildAndExpand(user.getId()).toUri();
 			return ResponseEntity.created(uri).body(new UserDTO(user));
 		}
 

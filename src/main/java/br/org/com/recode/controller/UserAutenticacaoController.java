@@ -17,7 +17,7 @@ import br.org.com.recode.controller.form.LoginForm;
 import br.org.com.recode.security.UserTokenService;
 
 @RestController
-@RequestMapping("/user/auth")
+@RequestMapping("/auth/adm")
 public class UserAutenticacaoController {
 	
 	@Autowired
@@ -36,13 +36,12 @@ public class UserAutenticacaoController {
 		try {
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = userTokenService.gerarToken(authentication);
-			System.out.println(token);
-			System.out.println("passou aqui");
+			System.out.println("token do usuario"+token);
 			return ResponseEntity.ok(new UserTokenDTO(token, "Bearer", authentication));
 
 		} catch (Exception e) {
 
-			System.out.println("user     AutenticacaoController dando ruim aqui");
+			System.out.println("AutenticacaoController dando ruim aqui do usuario");
 			return ResponseEntity.badRequest().build();
 		}
 

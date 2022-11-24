@@ -22,11 +22,11 @@ public class AutenticacaoService implements UserDetailsService {
 
 		Optional<Cliente> cliente = clienteRepository.findByEmail(username);
 		if (cliente.isPresent()) {
-			System.out.println("AutenticacaoService Achou");
+			System.out.println("AutenticacaoService Achou do cliente");
 			return cliente.get();
 		}
 
-		throw new UsernameNotFoundException("DADOS INVALIDOS");
+		throw new UsernameNotFoundException("DADOS INVALIDOS do cliente");
 
 	}
 

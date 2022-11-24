@@ -24,7 +24,7 @@ public class TokenService {
 
     Cliente logado = (Cliente) authentication.getPrincipal();
     System.out.println(logado.getNome());
-    System.out.println("passou aqui");
+    System.out.println("passou aqui cliente");
     Date hoje = new Date();
     Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
     Long id = logado.getId();
@@ -45,7 +45,7 @@ public class TokenService {
       Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
       return true;
     } catch (Exception e) {
-      System.out.println("Token invalid");
+      System.out.println("Token invalid do cliente");
       return false;
 
     }

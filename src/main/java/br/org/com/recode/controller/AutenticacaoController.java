@@ -39,7 +39,7 @@ public class AutenticacaoController {
 
 		} catch (Exception e) {
 
-			System.out.println("AutenticacaoController dando ruim aqui");
+			System.out.println("AutenticacaoController dando ruim aqui do cliente");
 			return ResponseEntity.badRequest().build();
 		}
 

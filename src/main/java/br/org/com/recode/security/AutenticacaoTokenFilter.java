@@ -31,7 +31,7 @@ public class AutenticacaoTokenFilter extends OncePerRequestFilter {
     String token = recuperarToken(request);
 
     boolean valido = tokenService.isTokenValid(token);
-    System.out.println("AutenticacaoTokenFilter"+valido);
+    System.out.println("AutenticacaoTokenFilter do cliente"+valido);
     if (valido) {
 
       autenticarCliente(token);
@@ -58,7 +58,7 @@ public class AutenticacaoTokenFilter extends OncePerRequestFilter {
     String token = request.getHeader("Authorization");
 
     if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
-      System.out.println("AutenticacaoTokenFilter AQUI TBM");
+      System.out.println("AutenticacaoTokenFilter AQUI TBM do cliente");
       return null;
     } else {
       return token.substring(7, token.length());

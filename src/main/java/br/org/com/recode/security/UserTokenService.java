@@ -24,7 +24,7 @@ public class UserTokenService {
 
 		User logado = (User) authentication.getPrincipal();
 		System.out.println(logado.getNome());
-		System.out.println("passou aqui");
+		System.out.println("gerou o token do usuario");
 		Date hoje = new Date();
 		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 		Long id = logado.getId();
@@ -35,12 +35,12 @@ public class UserTokenService {
 	}
 
 	public boolean isTokenValid(String token) {
-		System.out.println("Token Valid"+ token);
+		System.out.println("Token do usuario valido"+ token);
 		try {
 			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
-			System.out.println("Token invalid");
+			System.out.println("Token do usuario invalido");
 			return false;
 
 		}

@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.org.com.recode.repository.ClienteRepository;
 import br.org.com.recode.repository.UserRepository;
@@ -57,14 +56,12 @@ public class Security extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().authorizeHttpRequests()
 		.antMatchers(HttpMethod.POST, "/adm/**").hasAuthority("ADMIN")
 		.antMatchers(HttpMethod.GET, "/adm/**").hasAuthority("ADMIN")
-		.antMatchers(HttpMethod.GET, "/**").hasAuthority("ADMIN")
 		.antMatchers(HttpMethod.PUT, "/adm/**").hasAuthority("ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/adm/**").hasAuthority("ADMIN")
+		.antMatchers(HttpMethod.GET, "/**").hasAuthority("ADMIN")
+		.antMatchers(HttpMethod.POST, "/auth/adm").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers(HttpMethod.POST, "/**").permitAll()
-		.antMatchers(HttpMethod.POST, "/user/auth").permitAll()
-		.antMatchers(HttpMethod.POST, "/user/cadastrar").permitAll()
-		.antMatchers(HttpMethod.GET, "/user/listar").permitAll()
 		.anyRequest().authenticated()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, clienteRepository), UsernamePasswordAuthenticationFilter.class)

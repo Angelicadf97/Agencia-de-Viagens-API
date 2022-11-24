@@ -32,10 +32,10 @@ public class UserAutenticacaoTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		String token = recuperarToken(request);
-		System.out.println("doFilter Internal" + token);
+		System.out.println("doFilter Internal do usuario" + token);
 
 		boolean valido = userTokenService.isTokenValid(token);
-		System.out.println("AutenticacaoTokenFilter " + valido);
+		System.out.println("AutenticacaoTokenFilter do usuario" + valido);
 		if (valido) {
 
 			autenticarUser(token);
@@ -61,10 +61,10 @@ public class UserAutenticacaoTokenFilter extends OncePerRequestFilter {
 	private String recuperarToken(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization");
-		System.out.println("recuperarToken" + token);
+		System.out.println("recuperarToken do usuario" + token);
 
 		if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
-			System.out.println("USER AutenticacaoTokenFilter AQUI TBM");
+			System.out.println("AutenticacaoTokenFilter AQUI TBM  do usuario");
 			return null;
 		} else {
 			System.out.println("substring" + token.substring(7, token.length()));
